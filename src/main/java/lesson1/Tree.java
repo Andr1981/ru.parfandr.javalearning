@@ -30,7 +30,7 @@ public class Tree {
 
 
     void printTree() {
-        System.out.printf("Название дерева: %s \tЕго возраст: %d \n", name, age);
+        System.out.printf("Название дерева: %s\t Его возраст: %d \n", name, age);
     }
 
 

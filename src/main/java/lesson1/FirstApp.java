@@ -3,9 +3,9 @@ package lesson1;
 public class FirstApp {
     public static void main(String[] args) {
         System.out.println("Hello World");
-        Tree bana = new Tree("Банан", 5);
-        Tree aplle = new Tree("Яблоко", 10);
-        Tree orange = new Tree("Апельсин", 15);
+        Tree bana = new Tree("Банан", 15);
+        Tree aplle = new Tree("Яблоко", 5);
+        Tree orange = new Tree("Апельсин", 7);
         bana.printTree();
         aplle.printTree();
         orange.printTree();
