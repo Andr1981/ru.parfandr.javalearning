@@ -8,8 +8,8 @@ public class TestC {
         this.sum = sum;
     }
 
-    private void printSum(){
-        for (Sum sum1 : )
-        System.out.println();
-    }
+//    private void printSum(){
+//        for (Sum sum1 : )
+//        System.out.println();
+//    }
 }
