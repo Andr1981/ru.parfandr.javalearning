@@ -9,7 +9,10 @@ public class Goods {
         this.name = name;
         this.prise = prise;
         this.rating = rating;
+
     }
+
+
 
     public String getName() {
         return name;
@@ -34,6 +37,10 @@ public class Goods {
     public void setRating(int rating) {
         this.rating = rating;
     }
+
+
+
+
 
     @Override
     public String toString() {

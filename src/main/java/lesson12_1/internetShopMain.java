@@ -3,6 +3,9 @@ package lesson12_1;
 public class internetShopMain {
 
     public static void main(String[] args) {
+        Menu menu = new Menu();
+        menu.menuOptions();
+
         Goods milkGood1 = new Goods("Молоко Простоквашено", 85.00, 2);
         Goods milkGood2 = new Goods("Молоко Зеленый Луг", 105.00, 1);
         Goods milkGood3 = new Goods("Молоко Домик в деревне", 90.00, 3);

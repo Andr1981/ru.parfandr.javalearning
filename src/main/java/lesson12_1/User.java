@@ -13,7 +13,12 @@ public class User {
         this.login = scanner.next();
         System.out.println("Введите пароль");
         this.password = scanner.next();
+        checkValidPassword();
 
+
+    }
+
+    private void checkValidPassword() {
 
     }
 
