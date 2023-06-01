@@ -10,8 +10,8 @@ public class internetShopMain {
         Goods meatGood2 = new Goods("Сосиски Клинские", 250.00, 7);
         Category milkCategory = new Category("Milk");
         Category meatCategory = new Category("Meat");
-        User user1 = new User("Andr-AA", "123456");
-        User user2 = new User("Trigub-NN", "987654");
+        User user1 = new User();
+        User user2 = new User();
         milkCategory.setGoods(new Goods[]{milkGood1, milkGood2, milkGood3});
         meatCategory.setGoods(new Goods[]{meatGood1, meatGood2});
         user1.b1.setBasketGoods(new Goods[]{milkGood1,meatGood2});
