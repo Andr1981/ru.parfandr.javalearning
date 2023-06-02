@@ -1,9 +1,10 @@
 package lesson12_1;
 
-public class Goods {
+public class Goods implements PrintCategoriesAndGoods {
     private String name;
     private  double prise;
     private  int rating;
+
 
     public Goods(String name, double prise, int rating) {
         this.name = name;
@@ -49,5 +50,9 @@ public class Goods {
                 ", prise=" + prise +
                 ", rating=" + rating +
                 '}';
+    }
+
+    public void printInfo(PrintCategoriesAndGoods...printCategoriesAndGoods) {
+        System.out.println("- " + this.name + " : " + this.prise + " руб.");
     }
 }

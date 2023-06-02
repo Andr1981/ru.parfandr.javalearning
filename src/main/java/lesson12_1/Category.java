@@ -1,16 +1,14 @@
 package lesson12_1;
 
-public class Category {
+public class Category implements PrintCategoriesAndGoods {
     String name;
     Goods[] goods;
-
 
 
     public Category(String name) {
         this.name = name;
 
     }
-
 
 
     public String getName() {
@@ -25,16 +23,15 @@ public class Category {
         return goods;
     }
 
-    public void setGoods(Goods[] goods) {
+    public void setGoods(Goods... goods) {
         this.goods = goods;
-        printCategoryAndProducts(goods);
+
     }
-    public void printCategoryAndProducts(Goods[] goods){
-        System.out.println("В категории " + this.name + " следующие товары " );
-        for (Goods g: goods
-             ) {
-            System.out.println(g);
-        }
+
+
+    public void printInfo(PrintCategoriesAndGoods... printCategoriesAndGoods) {
+            System.out.println("- " + this.name + " ;");
+
 
     }
 }

@@ -9,17 +9,15 @@ public class User {
 
     public User() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите логин :");
-        this.login = scanner.next();
-        System.out.println("Введите пароль");
-        this.password = scanner.next();
-        checkValidPassword();
-
-
+        System.out.println("Введите логин : ");
+        this.login = scanner.nextLine();
+        System.out.println("Введите пароль : ");
+        this.password = scanner.nextLine();
+        checkLoginPassword(login, password);
     }
 
-    private void checkValidPassword() {
-
+    private void checkLoginPassword(String l, String p) {
+        System.out.println("Ваш логин " + l + ", ваш пароль " + p);
     }
 
     public String getLogin() {
