@@ -1,6 +1,6 @@
 package lesson12_1;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class Menu {
 
@@ -58,14 +58,25 @@ public class Menu {
                 break;
             case (3):
                 InfoCategoryGoods infoCategoryGoods1 = new InfoCategoryGoods();
+                Category milkCategory1 = new Category("Молочная продукция");
+                Category meatCategory1 = new Category("Мясная продукция");
                 Goods milkGood1 = new Goods("Молоко Простоквашено", 85.00, 2);
                 Goods milkGood2 = new Goods("Молоко Зеленый Луг", 105.00, 1);
                 Goods milkGood3 = new Goods("Молоко Домик в деревне", 90.00, 3);
                 Goods meatGood1 = new Goods("Сосиски Молочные", 235.00, 8);
                 Goods meatGood2 = new Goods("Сосиски Клинские", 250.00, 7);
-                infoCategoryGoods1.setCategoriesAndGoodsArr(milkGood1, milkGood2, milkGood3, meatGood1, meatGood2);
-                System.out.println("В магазине предствалены следующие товары :");
-                infoCategoryGoods1.printIfo(infoCategoryGoods1.categoriesAndGoodsArr);
+                List<Goods> goodsListMilk = new ArrayList<Goods>();
+                List<Goods> goodsListMeat = new ArrayList<Goods>();
+                goodsListMilk.add(milkGood1);
+                goodsListMilk.add(milkGood2);
+                goodsListMilk.add(milkGood3);
+                goodsListMeat.add(meatGood1);
+                goodsListMeat.add(meatGood2);
+                Map<Category, List<Goods>> categoryGoodsMap = new HashMap<Category, List<Goods>>();
+                categoryGoodsMap.put(milkCategory1, goodsListMilk);
+                categoryGoodsMap.put(meatCategory1, goodsListMeat);
+                System.out.println("В магазине предствалены следующие категории и товары к ним : ");
+                printCategoryGodds(categoryGoodsMap);
                 printMenu();
                 startMenu();
                 break;
@@ -79,9 +90,25 @@ public class Menu {
                 System.out.println("Выход");
                 System.exit(0);
 
+            default:
+                throw new IllegalStateException("Unexpected value: " + inputUser);
         }
 
 
+    }
+
+    private static void printCategoryGodds(Map<Category, List<Goods>> categoryGoodsMap) {
+        int count = 0;
+        for (Category category : categoryGoodsMap.keySet()
+        ) {
+            count = count + 1;
+            List<Goods> goodsFromMap = new ArrayList<Goods>(categoryGoodsMap.get(category));
+            System.out.println(count + " " + category.name + " : ");
+            for (int i = 0; i < goodsFromMap.size(); i++) {
+                System.out.println((i + 1) + ". " + goodsFromMap.get(i).getName() + " цена - " + goodsFromMap.get(i).getPrise() + " руб.");
+            }
+
+        }
     }
 
     private static void printMenu() {
