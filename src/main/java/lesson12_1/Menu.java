@@ -3,6 +3,8 @@ package lesson12_1;
 import java.util.*;
 
 public class Menu {
+    static Map<String, String> menuLoginPasswordMap = new HashMap<String, String>();
+
 
     public void menuOptions() {
         System.out.println("Добро пожаловать в интернет магазин продуктов");
@@ -12,77 +14,74 @@ public class Menu {
     }
 
     private static void startMenu() {
-        Scanner choiceMenu = new Scanner(System.in);
-        boolean valid = true;
-        while (valid) {
-            System.out.println("Введите пункт меню");
-            if (choiceMenu.hasNextInt()) {
-                int inputUser = choiceMenu.nextInt();
-                if (inputUser < 1 || inputUser > 6) {
-                    System.out.println("Вы ввели не верное число");
-                    printMenu();
-                    choiceMenu.nextLine();
-                    valid = true;
-                } else {
-                    startMenuUser(inputUser);
-                    valid = false;
-                    choiceMenu.close();
-                }
-            } else {
-                System.out.println("Вы ввели не число");
-                printMenu();
-                choiceMenu.nextLine();
-                valid = true;
-            }
+        Scanner scanner = new Scanner(System.in);
 
-        }
+        int inputUser = scanner.nextInt();
+        startMenuUser(inputUser, scanner);
+        scanner.close();
+
     }
 
-    private static void startMenuUser(int inputUser) {
+    private static void startMenuUser(int inputUser, Scanner scanner) {
         switch (inputUser) {
             case (1):
-                System.out.println("Поздравляю, вы вошли");
-                User user1 = new User();
+                User user = new User();
+                user.inputLoginPaasword(scanner);
+                menuLoginPasswordMap = user.getLoginPasswordMap();
                 printMenu();
                 startMenu();
                 break;
             case (2):
                 InfoCategoryGoods infoCategoryGoods = new InfoCategoryGoods();
-                Category milkCategory = new Category("Молочная продукция");
-                Category meatCategory = new Category("Мясная продукция");
-                infoCategoryGoods.setCategoriesAndGoodsArr(milkCategory, meatCategory);
+                ArrayList<Category> categoryArrayList = (ArrayList<Category>) new Category().makeCategoryList();
                 System.out.println("В магазине предствалены следующие категории товаров :");
-                infoCategoryGoods.printIfo(infoCategoryGoods.categoriesAndGoodsArr);
+                infoCategoryGoods.printCategoryList(infoCategoryGoods, categoryArrayList);
                 printMenu();
                 startMenu();
                 break;
             case (3):
                 InfoCategoryGoods infoCategoryGoods1 = new InfoCategoryGoods();
-                Category milkCategory1 = new Category("Молочная продукция");
-                Category meatCategory1 = new Category("Мясная продукция");
-                Goods milkGood1 = new Goods("Молоко Простоквашено", 85.00, 2);
-                Goods milkGood2 = new Goods("Молоко Зеленый Луг", 105.00, 1);
-                Goods milkGood3 = new Goods("Молоко Домик в деревне", 90.00, 3);
-                Goods meatGood1 = new Goods("Сосиски Молочные", 235.00, 8);
-                Goods meatGood2 = new Goods("Сосиски Клинские", 250.00, 7);
-                List<Goods> goodsListMilk = new ArrayList<Goods>();
-                List<Goods> goodsListMeat = new ArrayList<Goods>();
-                goodsListMilk.add(milkGood1);
-                goodsListMilk.add(milkGood2);
-                goodsListMilk.add(milkGood3);
-                goodsListMeat.add(meatGood1);
-                goodsListMeat.add(meatGood2);
+                ArrayList<Category> categoryArrayList1 = (ArrayList<Category>) new Category().makeCategoryList();
+                ArrayList<Goods> goodsArrayList1 = (ArrayList<Goods>) new Goods().makeGoodsList();
+                ArrayList<Goods> goodsListMilk = new ArrayList<Goods>();
+                ArrayList<Goods> goodsListMeat = new ArrayList<Goods>();
                 Map<Category, List<Goods>> categoryGoodsMap = new HashMap<Category, List<Goods>>();
-                categoryGoodsMap.put(milkCategory1, goodsListMilk);
-                categoryGoodsMap.put(meatCategory1, goodsListMeat);
+                createMap(categoryArrayList1, goodsArrayList1, goodsListMilk, goodsListMeat, categoryGoodsMap);
                 System.out.println("В магазине предствалены следующие категории и товары к ним : ");
-                printCategoryGodds(categoryGoodsMap);
+                infoCategoryGoods1.printCategoryGodds(categoryGoodsMap);
                 printMenu();
                 startMenu();
                 break;
             case (4):
-                System.out.println("Выбирайте товар");
+                System.out.println("Для начала пакупок необходима авторизация");
+                System.out.println("Введите логин :");
+                String login = scanner.next();
+                System.out.println("Введите пароль :");
+                String password = scanner.next();
+                boolean validLoginPassword = checkLoginPassword(login, password);
+                if (validLoginPassword) {
+
+                    InfoCategoryGoods infoCategoryGoods2 = new InfoCategoryGoods();
+                    ArrayList<Category> categoryArrayList2 = (ArrayList<Category>) new Category().makeCategoryList();
+                    ArrayList<Goods> goodsArrayList2 = (ArrayList<Goods>) new Goods().makeGoodsList();
+                    ArrayList<Goods> goodsListMilk1 = new ArrayList<Goods>();
+                    ArrayList<Goods> goodsListMeat1 = new ArrayList<Goods>();
+                    Map<Category, List<Goods>> categoryGoodsMap1 = new HashMap<Category, List<Goods>>();
+                    createMap(categoryArrayList2, goodsArrayList2, goodsListMilk1, goodsListMeat1, categoryGoodsMap1);
+                    System.out.println("В магазине предствалены следующие категории и товары к ним : ");
+                    infoCategoryGoods2.printCategoryGodds(categoryGoodsMap1);
+                    System.out.println("Введите номер категории товара для его выбора");
+                    Basket basket = new Basket();
+                    basket.makeBasket(scanner,categoryGoodsMap1);
+                } else {
+                    System.out.println("Попробуйте еще раз или зарегестрируйтесь");
+                    printMenu();
+                    startMenu();
+
+                }
+
                 break;
+
             case (5):
                 System.out.println("Покупайте товар");
                 break;
@@ -97,19 +96,43 @@ public class Menu {
 
     }
 
-    private static void printCategoryGodds(Map<Category, List<Goods>> categoryGoodsMap) {
-        int count = 0;
-        for (Category category : categoryGoodsMap.keySet()
+
+
+    private static boolean checkLoginPassword(String login, String password) {
+        boolean valid = false;
+        for (Map.Entry<String, String> entry : menuLoginPasswordMap.entrySet()
         ) {
-            count = count + 1;
-            List<Goods> goodsFromMap = new ArrayList<Goods>(categoryGoodsMap.get(category));
-            System.out.println(count + " " + category.name + " : ");
-            for (int i = 0; i < goodsFromMap.size(); i++) {
-                System.out.println((i + 1) + ". " + goodsFromMap.get(i).getName() + " цена - " + goodsFromMap.get(i).getPrise() + " руб.");
+            if (entry.getKey().equals(login) & entry.getValue().equals(password)) {
+                System.out.println("Логин и пароль совпадают");
+                valid = true;
+            } else {
+                System.out.println("Логин и пароль не совпадают");
+                valid = false;
             }
+        }
+        return valid;
+    }
+
+    private static void createMap(ArrayList<Category> categoryArrayList1, ArrayList<Goods> goodsArrayList1, ArrayList<Goods> goodsListMilk,
+                                  ArrayList<Goods> goodsListMeat, Map<Category, List<Goods>> categoryGoodsMap) {
+        for (int i = 0; i < goodsArrayList1.size(); i++) {
+            if (goodsArrayList1.get(i).getId() == 1) {
+                goodsListMilk.add(goodsArrayList1.get(i));
+            } else {
+                goodsListMeat.add(goodsArrayList1.get(i));
+            }
+        }
+        for (int i = 0; i < categoryArrayList1.size(); i++) {
+            if (categoryArrayList1.get(i).getName().equals("Молочная продукция")) {
+                categoryGoodsMap.put(categoryArrayList1.get(i), goodsListMilk);
+            } else {
+                categoryGoodsMap.put(categoryArrayList1.get(i), goodsListMeat);
+            }
+
 
         }
     }
+
 
     private static void printMenu() {
         System.out.println("Для регистрации пользователя нажмите 1");

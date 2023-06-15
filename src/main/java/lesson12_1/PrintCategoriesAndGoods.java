@@ -1,5 +1,8 @@
 package lesson12_1;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public interface PrintCategoriesAndGoods {
-    public void printInfo(PrintCategoriesAndGoods... printCategoriesAndGoods);
+    void printInfo(PrintCategoriesAndGoods... printCategoriesAndGoods);
 }
