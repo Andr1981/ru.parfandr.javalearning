@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Menu {
     static Map<String, String> menuLoginPasswordMap = new HashMap<String, String>();
+    static ArrayList<Goods> menubasketGoods = new ArrayList<Goods>();
 
 
     public void menuOptions() {
@@ -13,12 +14,31 @@ public class Menu {
 
     }
 
-    private static void startMenu() {
-        Scanner scanner = new Scanner(System.in);
+    public static void startMenu() {
+        Scanner choiceMenu = new Scanner(System.in);
+        boolean valid = true;
+        while (valid) {
+            System.out.println("Введите пункт меню");
+            if (choiceMenu.hasNextInt()) {
+                int inputUser = choiceMenu.nextInt();
+                if (inputUser < 1 || inputUser > 6) {
+                    System.out.println("Вы ввели не верное число");
+                    printMenu();
+                    choiceMenu.nextLine();
+                    valid = true;
+                } else {
+                    startMenuUser(inputUser, choiceMenu);
+                    valid = false;
+                    choiceMenu.close();
+                }
+            } else {
+                System.out.println("Вы ввели не число");
+                printMenu();
+                choiceMenu.nextLine();
+                valid = true;
+            }
 
-        int inputUser = scanner.nextInt();
-        startMenuUser(inputUser, scanner);
-        scanner.close();
+        }
 
     }
 
@@ -72,7 +92,9 @@ public class Menu {
                     infoCategoryGoods2.printCategoryGodds(categoryGoodsMap1);
                     System.out.println("Введите номер категории товара для его выбора");
                     Basket basket = new Basket();
-                    basket.makeBasket(scanner,categoryGoodsMap1);
+                    menubasketGoods = basket.makeBasket(scanner,categoryGoodsMap1);
+                    printMenu();
+                    startMenu();
                 } else {
                     System.out.println("Попробуйте еще раз или зарегестрируйтесь");
                     printMenu();
@@ -83,7 +105,8 @@ public class Menu {
                 break;
 
             case (5):
-                System.out.println("Покупайте товар");
+                System.out.println("Вы оформили покупку");
+                System.out.println("Ваша покупка "  + menubasketGoods.get(0).getName() + " на сумму " + menubasketGoods.get(0).getPrise() + " руб.");
                 break;
             case (6):
                 System.out.println("Выход");
@@ -134,7 +157,7 @@ public class Menu {
     }
 
 
-    private static void printMenu() {
+    public static void printMenu() {
         System.out.println("Для регистрации пользователя нажмите 1");
         System.out.println("Для просмотра списка категорий товаров нажмите 2");
         System.out.println("Для просмотра списка товаров необходимой категории 3");

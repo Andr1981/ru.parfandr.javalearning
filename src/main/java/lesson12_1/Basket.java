@@ -7,7 +7,7 @@ public class Basket {
     private ArrayList<Goods> basketGoods = new ArrayList<Goods>();
 
 
-    public void makeBasket(Scanner scanner, Map<Category, List<Goods>> categoryGoodsMap1) {
+    public ArrayList<Goods> makeBasket(Scanner scanner, Map<Category, List<Goods>> categoryGoodsMap1) {
         int command = scanner.nextInt();
         switch (command) {
             case (1):
@@ -23,14 +23,15 @@ public class Basket {
                         int choiceGood = scanner.nextInt();
                         if (choiceGood == 1) {
                             basketGoods.add(goodsList.get(0));
-                            System.out.println("В корзине " + basketGoods.get(0).getName());
+                            System.out.println("В корзине :\n - " + basketGoods.get(0).getName() + " " + basketGoods.get(0).getPrise() + " руб.");
+                            System.out.println("Для оформления покупки введите соответствующий пункт меню");
 
                         }
                     }
                 }
 
-
                 break;
         }
+        return basketGoods;
     }
 }
